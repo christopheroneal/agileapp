@@ -1,0 +1,81 @@
+<head>
+  <title>agile app</title>
+</head>
+<body>
+  <div id="content">
+    <div id="sidebar">
+      {{> sidebar }}
+    </div>
+    <div id="main-pane">
+      {{> main_pane }}
+    </div>
+  </div>
+</body>
+
+<template name="main_pane">
+  {{#if story_selected}}
+    {{#if task_selected}}
+      {{> task_display }}
+    {{else}}
+      {{> story_display }}
+    {{/if}}
+  {{else}}
+    {{> story_list }}
+  {{/if}}
+</template>
+
+<template name="story_list">
+  {{> new_story }}
+  {{#each stories }}
+    <p><a class="story" href="/story/{{_id}}">{{ title }} - {{ last_modified }}</a></p>
+  {{/each }}
+</template>
+
+<template name="new_story">
+  <p>New Story: <input type="text" id="newstory"></p>
+</template>
+
+<template name="story_display">
+  {{#with get_story story_id }}
+    <p><b>Title: </b> {{ title }}</p>
+    <p><b>Description: </b> {{ description }} </p>
+    <p><b>Completion: </b> {{ completion }} </p>
+    {{> task_list }}
+  {{/with}}
+</template>
+
+<template name="task_list">
+  <p>Tasks:</p>
+  {{#each get_story_tasks story_id }}
+    <p><a class="task" href="/task/{{_id}}">{{ title }} - {{ last_modified }}</a></p>
+  {{/each}}
+  {{> new_task }}
+</template>
+
+<template name="new_task">
+  <p>New Task: <input type="text" id="newtask"></p>
+</template>
+
+<template name="task_display">
+  {{#with get_task task_id }}
+    <p><b>Task</b></p>
+    <p><b>Title: </b> {{ title }} </p>
+    <p><b>Description: </b> {{ description }} </p>
+    <p><b>Completion: </b> {{ completion }} </p>
+  {{/with}}
+</template>
+
+<template name="sidebar">
+  <p><b>Test Agile App</b></p>
+  <p><a href="/">Home</a></p>
+  {{#if story_selected}}
+    story<br>
+    {{#if task_selected}}
+    task<br>
+    {{else}}
+      that's it<br>
+    {{/if}}
+  {{else}}
+    nothing selected
+  {{/if}}
+</template>

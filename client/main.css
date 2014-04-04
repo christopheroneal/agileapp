@@ -1,0 +1,12 @@
+#content {
+  float: left;
+  width: 100%;
+}
+#sidebar {
+  display: table-cell;
+  width: 200px;
+}
+#main-pane {
+  display: table-cell;
+}
+
